@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 //importing router
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
+const bookRouter = require('./routes/books')
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -24,7 +25,8 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 //connecting with database
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false)
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, 
+    useUnifiedTopology: true, })
 
 //checking if we are connected to our database
 const db = mongoose.connection
@@ -34,5 +36,6 @@ db.once('open', () => console.log("Connected to mongoose"));
 //importing router
 app.use('/', indexRouter);
 app.use('/authors', authorRouter);
+app.use('/books', bookRouter);
 
 app.listen(process.env.PORT || 3000);

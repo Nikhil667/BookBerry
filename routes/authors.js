@@ -30,7 +30,7 @@ router.get('/new', (req, res) => {
     res.render('authors/new', { author: new Author() })
 })
 
-//Create New Author Route
+//Create New Author Route 
 router.post('/', async (req, res) => {
     //res.send('New author Created')
     //res.send(req.body.name2)
