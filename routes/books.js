@@ -58,13 +58,12 @@ router.post('/', async (req, res) => {
     // const fileName = req.file != null ? req.file.filename : null
     const book = new Book({
         title: req.body.title,
-        description: req.body.description,
         author: req.body.author,
-        pageCount: req.body.pageCount,
         publishDate: new Date(req.body.publishDate),
-        //coverImageName: fileName
-    })
-    saveCover(book, req.body.cover)
+        pageCount: req.body.pageCount,
+        description: req.body.description
+      })
+      saveCover(book, req.body.cover)
     try {
         const newBook = await book.save()
         res.redirect(`books/${newBook.id}`)
@@ -134,10 +133,10 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-async function renderNewPage(res, book, hasError = false){
+function renderNewPage(res, book, hasError = false){
     renderFormPage(res, book, 'new', hasError)
 }
-async function renderEditPage(res, book, hasError = false){
+function renderEditPage(res, book, hasError = false){
     renderFormPage(res, book, 'edit', hasError)
 }
 
