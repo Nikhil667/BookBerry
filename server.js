@@ -5,6 +5,7 @@ if(process.env.NODE_ENV !== 'production'){
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const bodyParser = require('body-parser');
 // for put and delete methods in routes
@@ -30,12 +31,13 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 //connecting with database
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false)
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
 
 //checking if we are connected to our database
 const db = mongoose.connection
 db.on('error', error => console.error(error));
 db.once('open', () => console.log("Connected to mongoose"));
+
 
 //importing router
 app.use('/', indexRouter);
