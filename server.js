@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
 //connecting with database
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false)
-mongoose.connect(`${process.env.DATABASE_URL}`, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
 //checking if we are connected to our database
 const db = mongoose.connection
