@@ -1,28 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-//const multer = require('multer')
-// const path = require('path')
-// const fs = require('fs') // file system
-
 //import book from model
 const Book = require('../models/book')
 const Author = require('../models/author');
-const book = require('../models/book');
 
 //const uploadPath = path.join('public', Book.coverImageBasePath)
 const imageMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
-// const upload = multer({
-//     dest: uploadPath,
-//     fileFilter: (req, file, callback) => {
-//         callback(null, imageMimeTypes.includes(file.mimetype))
-//     }
-// });
 
 //All Book Route
 router.get('/', async (req, res) => {
-    //res.send("All books")
-    //renderNewPage(res, new Book())
     let query = Book.find()
     if (req.query.title != null && req.query.title != ''){
         query = query.regex('title', new RegExp(req.query.title, 'i'))
@@ -38,7 +25,7 @@ router.get('/', async (req, res) => {
         const books = await query.exec()
         res.render('books/index',{
             books: books,
-            searchOptions: req.body
+            searchOptions: req.query
         })
     } catch {
         res.redirect('/')

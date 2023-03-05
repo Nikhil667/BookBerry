@@ -1,4 +1,4 @@
-const { response } = require('express');
+
 const express = require('express');
 
 const router = express.Router();
@@ -80,7 +80,7 @@ router.get('/:id', async(req, res) => {
     }
 })
 
-router.get('/:id/edit',async (req, res) => {
+router.get('/:id/edit', async (req, res) => {
     //res.send('Edit Author' + req.params.id)
     try {
         const author = await Author.findById(req.params.id)
@@ -110,13 +110,13 @@ router.put('/:id', async (req, res) => {
         }      
     }
 })
-router.delete('/:id',async (req, res) => {
+router.delete('/:id', async (req, res) => {
     //res.send('Delete Author' + req.params.id)
     let author
     try {
         author = await Author.findById(req.params.id)
         // await author.remove()
-        const response = await Author.deleteOne({_id: req.params.id})
+        await Author.deleteOne({_id: req.params.id})
         res.redirect('/authors')
     } catch {
         if(author == null) {
