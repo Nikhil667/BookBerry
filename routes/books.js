@@ -76,7 +76,7 @@ router.get("/:id", async(req, res) => {
     try {
         const book = await Book.findById(req.params.id).populate('author').exec()
         res.render('books/show', {book : book })
-    } catch (error) {
+    } catch {
         res.redirect('/')        
     }
 })
@@ -119,7 +119,7 @@ router.delete('/:id', async (req, res) => {
     try {
         book = await Book.findById(req.params.id)
         // await author.remove()
-        const response = await Book.deleteOne({_id: req.params.id})
+        await Book.deleteOne({_id: req.params.id})
         res.redirect('/books')
     } catch {
         if(book != null) {
@@ -133,10 +133,10 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-function renderNewPage(res, book, hasError = false){
+async function renderNewPage(res, book, hasError = false){
     renderFormPage(res, book, 'new', hasError)
 }
-function renderEditPage(res, book, hasError = false){
+async function renderEditPage(res, book, hasError = false){
     renderFormPage(res, book, 'edit', hasError)
 }
 
@@ -161,7 +161,7 @@ async function renderFormPage(res, book, form, hasError = false){
 }
 
 function saveCover(book, coverEncoded){
-    if(coverEncoded == null) return;
+    if(coverEncoded == null) return
     const cover = JSON.parse(coverEncoded)
     if(cover != null && imageMimeTypes.includes(cover.type)){
         book.coverImage = new Buffer.from(cover.data, 'base64')
