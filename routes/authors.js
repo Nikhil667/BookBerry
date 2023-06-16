@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
     } catch {
         res.render('authors/new', {
             author: author,
-            errorMessage: 'Error creating author'
+            errorMessage: 'Error creating author, field cannot be blank'
         })
     }
 
